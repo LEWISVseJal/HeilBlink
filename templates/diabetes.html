@@ -1,0 +1,71 @@
+{% extends 'main.html' %}
+{% block title %}Diabetes Predictor | HeilBlick{% endblock %}
+{% block content %}
+<section class="predictor-hero fade-up">
+  <div>
+    <h1>Diabetes risk screening</h1>
+    <p>Enter the patient measurements below to estimate whether the model detects elevated diabetes risk.</p>
+  </div>
+  <div class="predictor-hero__meta">
+    <div class="pill">8 required inputs</div>
+    <div class="pill pill--muted">Average Accuracy {{ disease_meta['diabetes']['accuracy'] }}%</div>
+  </div>
+</section>
+
+<section class="predictor-layout predictor-layout--single fade-up delay-1">
+  <div class="panel form-panel">
+    <div class="panel__header">
+      <div>
+        <h2>Diabetes assessment form</h2>
+      </div>
+      <p class="section-copy">All fields are required.</p>
+    </div>
+
+    <form action="{{ url_for('predictPage') }}" method="POST" class="form-grid form-grid--two">
+      <label class="field">
+        <strong class="field__label">Number of Pregnancies</strong>
+        <input class="input" type="number" step="any" name="Pregnancies" placeholder="e.g. 2" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Glucose</strong>
+        <input class="input" type="number" step="any" name="Glucose" placeholder="e.g. 120" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Blood Pressure (mmHg)</strong>
+        <input class="input" type="number" step="any" name="BloodPressure" placeholder="e.g. 72" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Skin Thickness (mm)</strong>
+        <input class="input" type="number" step="any" name="SkinThickness" placeholder="e.g. 23" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Insulin (uU/ml)</strong>
+        <input class="input" type="number" step="any" name="Insulin" placeholder="e.g. 94" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">BMI</strong>
+        <input class="input" type="number" step="any" name="BMI" placeholder="e.g. 28.4" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Diabetes Pedigree Function</strong>
+        <input class="input" type="number" step="any" name="DiabetesPedigreeFunction" placeholder="e.g. 0.627" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Age (years)</strong>
+        <input class="input" type="number" step="any" name="Age" placeholder="e.g. 35" required>
+      </label>
+
+      <div class="form-actions form-actions--full">
+        <button class="button" type="submit">Predict Diabetes Risk</button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+{% block title %}Prediction Result | HeilBlick{% endblock %}
+{% block content %}
+{% if pred == "Invalid" %}
+  {% set status_class = "is-warning" %}
+  {% set status_label = "Invalid input" %}
+  {% set heading = "We could not generate a prediction." %}
+  {% set description = "At least one submitted value was invalid. Review the form, correct the entries, and try again." %}
+{% elif pred == 1 %}
+  {% set status_class = "is-danger" %}
+  {% set status_label = "Positive result" %}
+  {% set heading = "The model flagged a higher-risk signal." %}
+  {% set description = "This result suggests the patient may have the selected condition and should receive clinical follow-up." %}
+{% else %}
+  {% set status_class = "is-success" %}
+  {% set status_label = "Negative result" %}
+  {% set heading = "The model returned a lower-risk result." %}
+  {% set description = "This output suggests the patient is unlikely to have the selected condition." %}
+{% endif %}
+
+<section class="result-shell fade-up">
+  <div class="result-card {{ status_class }}">
+    <div class="result-card__badge">{{ status_label }}</div>
+    <h1>{{ heading }}</h1>
+    <p>{{ description }}</p>
+    {% if pred != "Invalid" %}
+      <div class="result-stats">
+        <div class="result-stat">
+          <div class="result-stat__label">Disease</div>
+          <div class="result-stat__value">{{ disease_name }}</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat__label">Average Accuracy</div>
+          <div class="result-stat__value">{{ accuracy }}%</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat__label">Current Risk Score</div>
+          <div class="result-stat__value">{{ risk_score }}% | {{ risk_level }}</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat__label">Result Status</div>
+          <div class="result-stat__value">{{ status_label }}</div>
+        </div>
+      </div>
+    {% endif %}
+    <div class="result-card__actions">
+      <a class="button" href="{{ retry_url or request.referrer or url_for('home') }}">Review Previous Screen</a>
+      <a class="button button--secondary" href="{{ url_for('home') }}">Back to Home</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

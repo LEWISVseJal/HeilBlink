@@ -1,0 +1,53 @@
+{% extends 'main.html' %}
+{% block title %}Pneumonia Predictor | HeilBlick{% endblock %}
+{% block content %}
+{% if message %}
+  <div class="alert-banner fade-up">
+    <strong>Upload issue:</strong>
+    <div class="alert-banner__message">{{ message }}</div>
+  </div>
+{% endif %}
+
+<section class="predictor-hero fade-up">
+  <div>
+    <h1>Pneumonia X-ray screening</h1>
+    <p>Upload a chest X-ray to preview it instantly and submit it for pneumonia screening.</p>
+  </div>
+  <div class="predictor-hero__meta">
+    <div class="pill">Chest X-ray required</div>
+    <div class="pill pill--muted">Average Accuracy {{ disease_meta['pneumonia']['accuracy'] }}%</div>
+  </div>
+</section>
+
+<section class="predictor-layout predictor-layout--single fade-up delay-1">
+  <div class="panel form-panel">
+    <div class="panel__header">
+      <div>
+        <h2>Pneumonia assessment form</h2>
+      </div>
+      <p class="section-copy">Preview updates instantly after file selection.</p>
+    </div>
+
+    <form class="upload-form" action="{{ url_for('pneumoniapredictPage') }}" method="POST" enctype="multipart/form-data">
+      <label class="upload-dropzone">
+        <input class="upload-dropzone__input" type="file" name="image" accept=".jpg,.jpeg,.png,.bmp" data-image-input required>
+        <strong class="upload-dropzone__title">Choose an X-ray image</strong>
+      </label>
+
+      <div class="preview-panel">
+        <div class="preview-panel__frame">
+          <img class="preview-panel__image is-hidden" data-image-preview alt="Selected X-ray preview">
+          <div class="preview-panel__placeholder" data-image-placeholder>
+            Your selected X-ray will appear here before submission.
+          </div>
+        </div>
+        <p class="caption" data-file-name>No file selected</p>
+      </div>
+
+      <div class="form-actions form-actions--full">
+        <button class="button" type="submit">Analyze X-ray</button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

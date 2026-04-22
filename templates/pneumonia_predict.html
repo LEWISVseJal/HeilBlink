@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+{% block title %}Pneumonia Result | HeilBlick{% endblock %}
+{% block content %}
+{% if pred is none %}
+  {% set status_class = "is-warning" %}
+  {% set status_label = "No result" %}
+  {% set heading = "We could not analyze that X-ray." %}
+  {% set description = "Please upload a valid chest X-ray image and run the prediction again." %}
+{% elif pred == 1 %}
+  {% set status_class = "is-danger" %}
+  {% set status_label = "Positive result" %}
+  {% set heading = "The X-ray was flagged for pneumonia risk." %}
+  {% set description = "This screening output suggests the image may contain pneumonia-related findings and should be reviewed clinically." %}
+{% else %}
+  {% set status_class = "is-success" %}
+  {% set status_label = "Negative result" %}
+  {% set heading = "The X-ray returned a lower-risk result." %}
+  {% set description = "This screening output suggests the uploaded scan does not show a pneumonia-positive pattern, though professional review still matters." %}
+{% endif %}
+
+<section class="result-shell fade-up">
+  <div class="result-card {{ status_class }}">
+    <div class="result-card__badge">{{ status_label }}</div>
+    <h1>{{ heading }}</h1>
+    <p>{{ description }}</p>
+    {% if pred is not none %}
+      <div class="result-stats">
+        <div class="result-stat">
+          <div class="result-stat__label">Disease</div>
+          <div class="result-stat__value">{{ disease_name }}</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat__label">Average Accuracy</div>
+          <div class="result-stat__value">{{ accuracy }}%</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat__label">Current Risk Score</div>
+          <div class="result-stat__value">{{ risk_score }}% | {{ risk_level }}</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat__label">Result Status</div>
+          <div class="result-stat__value">{{ status_label }}</div>
+        </div>
+      </div>
+    {% endif %}
+    <div class="result-card__actions">
+      <a class="button" href="{{ request.referrer or url_for('pneumoniaPage') }}">Review Upload</a>
+      <a class="button button--secondary" href="{{ url_for('home') }}">Back to Dashboard</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

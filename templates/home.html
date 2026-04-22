@@ -1,0 +1,162 @@
+{% extends 'main.html' %}
+{% block title %}HeilBlick | Smart Disease Predictor{% endblock %}
+{% block content %}
+{% if message %}
+  <div class="alert-banner fade-up">
+    <strong>Input issue:</strong>
+    <div class="alert-banner__message">{{ message }}</div>
+  </div>
+{% endif %}
+
+<section class="hero hero--home hero--single">
+  <div class="hero__content panel fade-up">
+    <h1>One interface for fast disease risk screening and X-ray review.</h1>
+    <div class="button-row">
+      <a class="button" href="{{ url_for('diabetesPage') }}">Start a Prediction</a>
+      <a class="button button--ghost" href="{{ url_for('dashboardPage') }}">Open Model Dashboard</a>
+    </div>
+  </div>
+</section>
+
+<section class="fade-up delay-1">
+  <div class="section-heading section-heading--compact">
+    <div>
+      <h2>Average model accuracy</h2>
+    </div>
+  </div>
+
+  <div class="metrics-grid metrics-grid--home">
+    <article class="metric-card">
+      <div class="metric-card__label">Diabetes</div>
+      <div class="metric-card__value">{{ disease_meta['diabetes']['accuracy'] }}%</div>
+      <p>Structured screening using patient history and metabolic indicators.</p>
+    </article>
+    <article class="metric-card">
+      <div class="metric-card__label">Breast Cancer</div>
+      <div class="metric-card__value">{{ disease_meta['breast_cancer']['accuracy'] }}%</div>
+      <p>Feature-based prediction using tumor measurement variables.</p>
+    </article>
+    <article class="metric-card">
+      <div class="metric-card__label">Liver Disease</div>
+      <div class="metric-card__value">{{ disease_meta['liver']['accuracy'] }}%</div>
+      <p>Clinical chemistry screening focused on liver function markers.</p>
+    </article>
+    <article class="metric-card">
+      <div class="metric-card__label">Pneumonia</div>
+      <div class="metric-card__value">{{ disease_meta['pneumonia']['accuracy'] }}%</div>
+      <p>Image-based review of chest X-rays with upload and preview support.</p>
+    </article>
+  </div>
+</section>
+
+<section id="conditions" class="fade-up delay-2">
+  <div class="section-heading section-heading--compact">
+    <div>
+      <h2>Choose a screening path</h2>
+    </div>
+  </div>
+
+  <div class="conditions-grid conditions-grid--home">
+    <article class="condition-card">
+      <div class="condition-card__top">
+        <h3>Diabetes</h3>
+        <div class="pill-group">
+          <div class="pill">8 inputs</div>
+          <div class="pill pill--muted">Tabular</div>
+        </div>
+      </div>
+      <div class="condition-score-grid">
+        <div class="condition-score">
+          <div class="condition-score__label">Average Accuracy</div>
+          <div class="condition-score__value">{{ disease_meta['diabetes']['accuracy'] }}%</div>
+        </div>
+      </div>
+      <div class="chip-list">
+        <div class="chip">Increased thirst</div>
+        <div class="chip">Frequent urination</div>
+        <div class="chip">Blurred vision</div>
+        <div class="chip">Unexplained weight loss</div>
+      </div>
+      <div class="button-row">
+        <a class="button button--secondary" href="{{ url_for('diabetesPage') }}">Open Diabetes Predictor</a>
+      </div>
+    </article>
+
+    <article class="condition-card">
+      <div class="condition-card__top">
+        <h3>Breast Cancer</h3>
+        <div class="pill-group">
+          <div class="pill">22 inputs</div>
+          <div class="pill pill--muted">Tabular</div>
+        </div>
+      </div>
+      <div class="condition-score-grid">
+        <div class="condition-score">
+          <div class="condition-score__label">Average Accuracy</div>
+          <div class="condition-score__value">{{ disease_meta['breast_cancer']['accuracy'] }}%</div>
+        </div>
+      </div>
+      <div class="chip-list">
+        <div class="chip">Breast lump</div>
+        <div class="chip">Skin dimpling</div>
+        <div class="chip">Nipple changes</div>
+        <div class="chip">Localized swelling</div>
+      </div>
+      <div class="button-row">
+        <a class="button button--secondary" href="{{ url_for('cancerPage') }}">Open Breast Cancer Predictor</a>
+      </div>
+    </article>
+
+    <article class="condition-card">
+      <div class="condition-card__top">
+        <h3>Liver Disease</h3>
+        <div class="pill-group">
+          <div class="pill">10 inputs</div>
+          <div class="pill pill--muted">Tabular</div>
+        </div>
+      </div>
+      <div class="condition-score-grid">
+        <div class="condition-score">
+          <div class="condition-score__label">Average Accuracy</div>
+          <div class="condition-score__value">{{ disease_meta['liver']['accuracy'] }}%</div>
+        </div>
+      </div>
+      <div class="chip-list">
+        <div class="chip">Abdominal pain</div>
+        <div class="chip">Fatigue</div>
+        <div class="chip">Easy bruising</div>
+        <div class="chip">Nausea</div>
+      </div>
+      <div class="button-row">
+        <a class="button button--secondary" href="{{ url_for('liverPage') }}">Open Liver Predictor</a>
+      </div>
+    </article>
+
+    <article class="condition-card">
+      <div class="condition-card__top">
+        <h3>Pneumonia</h3>
+        <div class="pill-group">
+          <div class="pill">Image upload</div>
+          <div class="pill pill--muted">X-ray</div>
+        </div>
+      </div>
+      <div class="condition-score-grid">
+        <div class="condition-score">
+          <div class="condition-score__label">Average Accuracy</div>
+          <div class="condition-score__value">{{ disease_meta['pneumonia']['accuracy'] }}%</div>
+        </div>
+      </div>
+      <div class="chip-list">
+        <div class="chip">High fever</div>
+        <div class="chip">Productive cough</div>
+        <div class="chip">Fatigue</div>
+        <div class="chip">Sore throat</div>
+      </div>
+      <div class="button-row">
+        <a class="button button--secondary" href="{{ url_for('pneumoniaPage') }}">Open Pneumonia Predictor</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+{% endblock %}

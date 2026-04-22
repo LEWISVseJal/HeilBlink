@@ -1,0 +1,85 @@
+{% extends 'main.html' %}
+{% block title %}Liver Disease Predictor | HeilBlick{% endblock %}
+{% block content %}
+<section class="predictor-hero fade-up">
+  <div>
+    <h1>Liver disease screening</h1>
+    <p>Use liver function markers and patient details below to estimate whether the model detects a high-risk signal.</p>
+  </div>
+  <div class="predictor-hero__meta">
+    <div class="pill">10 required inputs</div>
+    <div class="pill pill--muted">Average Accuracy {{ disease_meta['liver']['accuracy'] }}%</div>
+  </div>
+</section>
+
+<section class="predictor-layout predictor-layout--single fade-up delay-1">
+  <div class="panel form-panel">
+    <div class="panel__header">
+      <div>
+        <h2>Liver assessment form</h2>
+      </div>
+      <p class="section-copy">All fields are required.</p>
+    </div>
+
+    <form action="{{ url_for('predictPage') }}" method="POST" class="form-grid form-grid--two">
+      <label class="field">
+        <strong class="field__label">Age (years)</strong>
+        <input class="input" type="number" step="any" name="Age" placeholder="e.g. 45" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Gender</strong>
+        <select class="select" name="Gender" required>
+          <option value="" selected disabled>Select encoded value</option>
+          <option value="0">0 - Male</option>
+          <option value="1">1 - Female</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Total Bilirubin (mg/dL)</strong>
+        <input class="input" type="number" step="any" name="Total_Bilirubin" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Conjugated Bilirubin (mg/dL)</strong>
+        <input class="input" type="number" step="any" name="Direct_Bilirubin" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Alkaline Phosphatase (IU/L)</strong>
+        <input class="input" type="number" step="any" name="Alkaline_Phosphotase" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Alamine Aminotransferase (IU/L)</strong>
+        <input class="input" type="number" step="any" name="Alamine_Aminotransferase" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Aspartate Aminotransferase (IU/L)</strong>
+        <input class="input" type="number" step="any" name="Aspartate_Aminotransferase" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Total Proteins (g/dL)</strong>
+        <input class="input" type="number" step="any" name="Total_Protiens" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Albumin (g/dL)</strong>
+        <input class="input" type="number" step="any" name="Albumin" required>
+      </label>
+
+      <label class="field">
+        <strong class="field__label">Albumin and Globulin Ratio</strong>
+        <input class="input" type="number" step="any" name="Albumin_and_Globulin_Ratio" required>
+      </label>
+
+      <div class="form-actions form-actions--full">
+        <button class="button" type="submit">Predict Liver Disease Risk</button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

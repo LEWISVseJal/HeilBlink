@@ -1,0 +1,150 @@
+{% extends 'main.html' %}
+{% block title %}HeilBlick | Model Performance Dashboard{% endblock %}
+{% block body_class %}page-dashboard{% endblock %}
+{% block content %}
+<section class="hero hero--dashboard hero--single">
+  <div class="hero__content panel fade-up">
+    <h1>Model Performance Dashboard.</h1>
+    <div class="button-row">
+      <a class="button" href="#comparison-sections">View Model Comparisons</a>
+      <a class="button button--ghost" href="{{ url_for('home') }}">Back to Predictors</a>
+    </div>
+  </div>
+</section>
+
+
+<div id="comparison-sections" class="comparison-stack">
+  {% for section in comparison_sections %}
+  <section class="comparison-section panel fade-up {{ loop.cycle('', 'delay-1', 'delay-2') }}">
+    <div class="comparison-section__header">
+      <div>
+        <h2>{{ section.name }}</h2>
+      </div>
+      <div class="comparison-callout">
+        <div class="comparison-callout__label">Best Performing Model</div>
+        <strong>{{ section.best_model.name }}</strong>
+        <div class="comparison-callout__metric">
+          <div class="comparison-callout__metric-title">Best Model Accuracy</div>
+          <strong class="comparison-callout__number" data-countup="{{ section.best_model.accuracy }}" data-suffix="%" data-precision="2">0.00%</strong>
+        </div>
+        <div class="comparison-callout__metric">
+          <div class="comparison-callout__metric-title">Average Accuracy</div>
+          <strong class="comparison-callout__number" data-countup="{{ section.average_accuracy }}" data-suffix="%" data-precision="2">0.00%</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="comparison-layout">
+      <div class="model-bars">
+        {% for model in section.models %}
+        <article class="model-bar {% if model.is_best %}is-best{% endif %}">
+          <div class="model-bar__top">
+            <div class="model-bar__title">
+              <div class="model-bar__short">{{ model.short }}</div>
+              <div>
+                <h3>{{ model.name }}</h3>
+              </div>
+            </div>
+            {% if model.is_best %}
+            <div class="best-pill">Highest Accuracy</div>
+            {% endif %}
+          </div>
+
+          <div class="model-bar__track">
+            <div class="model-bar__fill" data-progress="{{ model.accuracy }}">
+              <div class="model-bar__value" data-progress-value data-suffix="%" data-precision="2">0.00%</div>
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+
+      <aside class="comparison-side">
+        <div class="insight-card">
+          <h3>{{ section.insight }}</h3>
+        </div>
+
+        <figure class="artifact-card">
+          <img
+            src="{{ url_for('artifact', folder=section.artifact.folder, filename=section.artifact.filename) }}"
+            alt="{{ section.name }} notebook comparison chart"
+          >
+        </figure>
+      </aside>
+    </div>
+  </section>
+  {% endfor %}
+
+  <section class="comparison-section comparison-section--pneumonia panel fade-up delay-2">
+    <div class="comparison-section__header">
+      <div>
+        <h2>{{ pneumonia_section.name }}: {{ pneumonia_section.display_name }}</h2>
+      </div>
+      <div class="comparison-callout comparison-callout--accent">
+        <div class="comparison-callout__label">Featured Model</div>
+        <strong>{{ pneumonia_section.model_name }}</strong>
+        <div class="comparison-callout__metric">
+          <div class="comparison-callout__metric-title">Test Accuracy</div>
+          <strong class="comparison-callout__number" data-countup="{{ pneumonia_section.test_accuracy }}" data-suffix="%" data-precision="2">0.00%</strong>
+        </div>
+        <div class="comparison-callout__metric">
+          <div class="comparison-callout__metric-title">Average Accuracy</div>
+          <strong class="comparison-callout__number" data-countup="{{ pneumonia_section.average_accuracy }}" data-suffix="%" data-precision="2">0.00%</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="pneumonia-layout">
+      <div class="pneumonia-overview">
+        <div class="insight-card">
+          <h3>{{ pneumonia_section.insight }}</h3>
+
+          <div class="progress-stack">
+            <div class="progress-meter">
+              <div class="progress-meter__label-row">
+                <div class="progress-meter__label">Validation Accuracy</div>
+                <strong data-countup="{{ pneumonia_section.validation_accuracy }}" data-suffix="%" data-precision="2">0.00%</strong>
+              </div>
+              <div class="progress-meter__track">
+                <div class="progress-meter__fill" data-progress="{{ pneumonia_section.validation_accuracy }}"></div>
+              </div>
+            </div>
+
+            <div class="progress-meter">
+              <div class="progress-meter__label-row">
+                <div class="progress-meter__label">Test Accuracy</div>
+                <strong data-countup="{{ pneumonia_section.test_accuracy }}" data-suffix="%" data-precision="2">0.00%</strong>
+              </div>
+              <div class="progress-meter__track">
+                <div class="progress-meter__fill" data-progress="{{ pneumonia_section.test_accuracy }}"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pneumonia-metrics">
+            <div class="pneumonia-metric-card">
+              <div class="pneumonia-metric-label">Validation Loss</div>
+              <strong>{{ '%.4f'|format(pneumonia_section.validation_loss) }}</strong>
+            </div>
+            <div class="pneumonia-metric-card">
+              <div class="pneumonia-metric-label">Test Loss</div>
+              <strong>{{ '%.4f'|format(pneumonia_section.test_loss) }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pneumonia-graphs">
+        {% for graph in pneumonia_section.graphs %}
+        <figure class="artifact-card artifact-card--graph">
+          <img
+            src="{{ url_for('artifact', folder=graph.folder, filename=graph.filename) }}"
+            alt="{{ graph.caption }}"
+          >
+        </figure>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

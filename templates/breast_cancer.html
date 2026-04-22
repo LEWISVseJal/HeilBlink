@@ -1,0 +1,146 @@
+{% extends 'main.html' %}
+{% block title %}Breast Cancer Predictor | HeilBlick{% endblock %}
+{% block content %}
+<section class="predictor-hero fade-up">
+  <div>
+    <h1>Breast cancer risk screening</h1>
+    <p>Provide the tumor feature measurements below to estimate whether the model detects a high-risk pattern.</p>
+  </div>
+  <div class="predictor-hero__meta">
+    <div class="pill">22 required inputs</div>
+    <div class="pill pill--muted">Average Accuracy {{ disease_meta['breast_cancer']['accuracy'] }}%</div>
+  </div>
+</section>
+
+<section class="predictor-layout predictor-layout--single fade-up delay-1">
+  <div class="panel form-panel">
+    <div class="panel__header">
+      <div>
+        <h2>Breast cancer assessment form</h2>
+      </div>
+      <p class="section-copy">All fields are required.</p>
+    </div>
+
+    <form action="{{ url_for('predictPage') }}" method="POST" class="form-sections">
+      <section class="form-section">
+        <div class="form-section__heading">
+          <h3>Mean values</h3>
+          <div class="pill pill--muted">6 fields</div>
+        </div>
+        <div class="form-grid form-grid--three">
+          <label class="field">
+            <strong class="field__label">Texture Mean</strong>
+            <input class="input" type="number" step="any" name="texture_mean" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Smoothness Mean</strong>
+            <input class="input" type="number" step="any" name="smoothness_mean" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Compactness Mean</strong>
+            <input class="input" type="number" step="any" name="compactness_mean" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Concave Points Mean</strong>
+            <input class="input" type="number" step="any" name="concave points_mean" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Symmetry Mean</strong>
+            <input class="input" type="number" step="any" name="symmetry_mean" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Fractal Dimension Mean</strong>
+            <input class="input" type="number" step="any" name="fractal_dimension_mean" required>
+          </label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <div class="form-section__heading">
+          <h3>Standard error values</h3>
+          <div class="pill pill--muted">8 fields</div>
+        </div>
+        <div class="form-grid form-grid--three">
+          <label class="field">
+            <strong class="field__label">Texture Standard Error</strong>
+            <input class="input" type="number" step="any" name="texture_se" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Area Standard Error</strong>
+            <input class="input" type="number" step="any" name="area_se" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Smoothness Standard Error</strong>
+            <input class="input" type="number" step="any" name="smoothness_se" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Compactness Standard Error</strong>
+            <input class="input" type="number" step="any" name="compactness_se" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Concavity Standard Error</strong>
+            <input class="input" type="number" step="any" name="concavity_se" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Concave Points Standard Error</strong>
+            <input class="input" type="number" step="any" name="concave points_se" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Symmetry Standard Error</strong>
+            <input class="input" type="number" step="any" name="symmetry_se" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Fractal Dimension Standard Error</strong>
+            <input class="input" type="number" step="any" name="fractal_dimension_se" required>
+          </label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <div class="form-section__heading">
+          <h3>Worst values</h3>
+          <div class="pill pill--muted">8 fields</div>
+        </div>
+        <div class="form-grid form-grid--three">
+          <label class="field">
+            <strong class="field__label">Texture Worst</strong>
+            <input class="input" type="number" step="any" name="texture_worst" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Area Worst</strong>
+            <input class="input" type="number" step="any" name="area_worst" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Smoothness Worst</strong>
+            <input class="input" type="number" step="any" name="smoothness_worst" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Compactness Worst</strong>
+            <input class="input" type="number" step="any" name="compactness_worst" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Concavity Worst</strong>
+            <input class="input" type="number" step="any" name="concavity_worst" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Concave Points Worst</strong>
+            <input class="input" type="number" step="any" name="concave points_worst" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Symmetry Worst</strong>
+            <input class="input" type="number" step="any" name="symmetry_worst" required>
+          </label>
+          <label class="field">
+            <strong class="field__label">Fractal Dimension Worst</strong>
+            <input class="input" type="number" step="any" name="fractal_dimension_worst" required>
+          </label>
+        </div>
+      </section>
+
+      <div class="form-actions form-actions--full">
+        <button class="button" type="submit">Predict Breast Cancer Risk</button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}
