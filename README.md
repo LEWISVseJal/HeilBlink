@@ -1,6 +1,6 @@
-# HeilBlick
+# HeilBlink
 
-HeilBlick is a Flask-based medical prediction web application that combines classical machine learning and deep learning models to provide disease screening workflows through a browser interface.
+HeilBlink is a Flask-based medical prediction web application that combines classical machine learning and deep learning models to provide disease screening workflows through a browser interface.
 
 The application currently supports:
 
@@ -24,7 +24,7 @@ The application currently supports:
 ## Project Structure
 
 ```text
-HeilBlick/
+HeilBlink/
 |-- app.py                 # Main Flask application
 |-- requirements.txt       # Python dependencies
 |-- Procfile               # Deployment entrypoint for Gunicorn
@@ -105,7 +105,7 @@ Tabular models are loaded with `pickle`, while the pneumonia model is loaded wit
 
 ```bash
 git clone <your-repository-url>
-cd HeilBlick
+cd HeilBlink
 ```
 
 ### 2. Create and activate a virtual environment
